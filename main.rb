@@ -56,17 +56,24 @@ class LinkedList
 
   # Trzeba dodać kilka przypadków.
   def insert_at(value, index)
-    node = Node.new(value, at(index))
-    if index == 0
+    if size == 0
+      node = Node.new(value, @tail)
+      @head.next_node = node
+    elsif index > size - 1
+      node = Node.new(value, @tail)
+      last_node.next_node = node
+    elsif index == 0
+      node = Node.new(value, first_node)
       @head.next_node = node
     else
+      node = Node.new(value, at(index))
       at(index - 1).next_node = node
     end
   end
 
   def remove_at(index)
-    return if empty?
-    return if at(index).nil?
+    raise 'List is empty.' if empty?
+    raise 'No Node at given index.' if at(index).nil?
 
     node = at(index)
     at(index - 1).next_node = at(index + 1) unless index == 0
